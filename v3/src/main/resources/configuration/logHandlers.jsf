@@ -1,0 +1,116 @@
+<!--
+/*
+ * Copyright 2013 Pierantonio Cangianiello.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<!composition template="/templates/default.layout"  guiTitle="Log Handlers Settings" >
+<!define name="content">
+
+<event>
+    <!beforeCreate
+        setSessionAttribute(key="advancedLoggingTabs" value="advancedLoggingHandlersTab");
+        getRequestValue(key="configName" value=>$page{configName} default="server-config");
+
+        gf.getLogHandlers(configName="#{pageSession.configName}", logHandlers="#{requestScope.logHandlers}" );
+
+    />
+</event>
+
+<sun:form id="form1">
+#include "advancedLoggingTabs.inc"
+#include "/common/shared/alertMsg.inc"
+
+    <sun:title id="propertyContentPage" title="Log Handlers Settings" helpText="Create Log Handlers in order to manage log flows redirection" >
+#include "logHandlersButtons.jsf"
+    </sun:title>
+        
+#include "/common/shared/configNameSection.inc"
+#include "fileNamePatternInstructions.inc"
+
+
+    <!-- Table .... -->
+    <sun:table id="basicTable"  style="padding: 10pt" title="Log Handlers"
+               deselectMultipleButton="$boolean{true}"
+               deselectMultipleButtonOnClick="setTimeout('changeOneTableButton()', 0)"
+               selectMultipleButton="$boolean{true}"
+               selectMultipleButtonOnClick="setTimeout('changeOneTableButton()', 0)" >
+        <!afterCreate
+            getClientId(component="$this{component}" clientId=>$page{tableId});
+        />
+        <!-- Actions (Top) -->
+        
+        <!facet actionsTop>
+        <sun:panelGroup id="topActionsGroup1">
+            <!afterCreate
+                getClientId(component="$this{component}" clientId=>$page{topActionGroup});
+            />
+
+            <sun:button id="addSharedTableButton" disabled="#{false}" text="Add Log Handler" >
+                <!command
+                    getUIComponent(clientId="$pageSession{tableRowGroupId}", component=>$attribute{tableRowGroup});
+                    addRowToTable(TableRowGroup="$attribute{tableRowGroup}", NameList={"name", "fileNamePattern", "maxFileSize", "maxFileRotations"});
+                />
+            </sun:button>
+
+            <sun:button id="button1" text="Remove Log Handler" disabled="#{true}" primary="#{true}">
+                <!command
+                     getUIComponent(clientId="$pageSession{tableRowGroupId}", component=>$attribute{trg});
+                     getSelectedTableRowKeys(tableRowGroup="${trg}" rowKeys=>$attribute{rowKeys});
+                     deleteTableRows(tableRowGroup="${trg}" rowKeys="${rowKeys}");
+                     commitTableRowGroup(tableRowGroup="${trg}");
+                />
+            </sun:button>
+
+
+        </sun:panelGroup>                
+        </facet>
+        
+        <sun:tableRowGroup id="rowGroup1" selected="#{td.value.selected}" data={"$attribute{logHandlers}"}  sourceVar="td">
+            <!afterCreate
+                getClientId(component="$this{component}" clientId=>$page{tableRowGroupId});
+            />
+            <sun:tableColumn selectId="select" rowHeader="$boolean{false}" id="col1">
+                <sun:checkbox id="select"
+                              selected="#{td.value.selected}"
+                              selectedValue="$boolean{true}"
+                              onClick="setTimeout('changeOneTableButton()', 0);"
+                              />
+            </sun:tableColumn>
+            <sun:tableColumn headerText="Log Handler Name" sort="name" rowHeader="$boolean{false}" id="col2">
+                <sun:textField columns="$int{30}" id="col2text" value="#{td.value.name}" />
+            </sun:tableColumn>
+            <sun:tableColumn headerText="Log File Name Pattern" sort="fileNamePattern" rowHeader="$boolean{false}" id="col3">
+                <sun:textField columns="$int{70}" id="col3text" value="#{td.value.fileNamePattern}" />
+            </sun:tableColumn>
+            <sun:tableColumn headerText="Log File Max Size" rowHeader="$boolean{false}" id="col4">
+                <sun:textField columns="$int{20}" id="col4text" value="#{td.value.maxFileSize}" />
+            </sun:tableColumn>
+            <sun:tableColumn headerText="Log File Rotation Count" rowHeader="$boolean{false}" id="col5">
+                <sun:textField columns="$int{20}" id="col5text" value="#{td.value.maxFileRotations}" />
+            </sun:tableColumn>
+                "<br/>
+        </sun:tableRowGroup>
+    </sun:table>
+
+<sun:title id="title2" >
+#include "logHandlersButtons.jsf"
+</sun:title>
+                
+</sun:form>
+"<br/>
+#include "/common/shared/changeButtonsJS.inc" 
+</define>
+</composition>

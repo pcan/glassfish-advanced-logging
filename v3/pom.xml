@@ -1,0 +1,150 @@
+<!--
+    Copyright 2013 Pierantonio Cangianiello
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    
+    <parent>
+        <groupId>org.glassfish.admingui</groupId>
+        <artifactId>admingui</artifactId>
+        <version>3.1.1</version>
+    </parent>
+    
+    <groupId>it.pcan.java.glassfish.loghandler</groupId>
+    <artifactId>advanced-logging-gf3</artifactId>
+    <packaging>hk2-jar</packaging>
+    <name>Advanced Logging</name>
+  
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+  
+    <profiles>
+        <profile>
+            <id>jdk7-fix</id>
+            <activation>
+                <file>
+                    <exists>${java.home}/../lib/tools.jar</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.sun.enterprise</groupId>
+                            <artifactId>hk2-maven-plugin</artifactId>
+                            <configuration>
+                                <processors>
+                                    <processor>
+                                        <groupId>com.sun.jsftemplating</groupId>
+                                        <artifactId>jsftemplating-dt</artifactId>
+                                        <version>${jsftemplating.version}</version>
+                                    </processor>
+                                </processors>
+                            </configuration>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.sun</groupId>
+                                    <artifactId>tools</artifactId>
+                                    <version>1.7</version>
+                                    <scope>system</scope>
+                                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <properties>
+                <netbeans.hint.license>apache20</netbeans.hint.license>
+            </properties>
+        </profile>
+    </profiles>
+
+    <developers>
+        <developer>
+            <id>pcan</id>
+            <name>Pierantonio Cangianiello</name>
+            <url>http://it.linkedin.com/pub/pierantonio-cangianiello/78/199/a29/</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+  
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.jar</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+    
+    
+    <repositories>
+        <repository>
+            <id>glassfish-repository</id>
+            <name>Java.net Repository for Glassfish</name>
+            <url>http://download.java.net/maven/glassfish</url>
+            <snapshots>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+  
+    <dependencies>
+        <!--<dependency>
+            <groupId>org.glassfish.core</groupId>
+            <artifactId>logging</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>org.glassfish.common</groupId>
+            <artifactId>glassfish-api</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.admingui</groupId>
+            <artifactId>console-plugin-service</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.admingui</groupId>
+            <artifactId>console-common</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.admin</groupId>
+            <artifactId>config-api</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <description>A module for Glassfish 3.x environment to enable multiple Log Handlers and bind Loggers to them.
+It includes a configuration screen for the Admin Console, added under Logging Configuration node.</description>
+</project>
