@@ -21,7 +21,8 @@ import org.jvnet.hk2.config.ConfigBeanProxy;
 import org.jvnet.hk2.config.Configured;
 
 /**
- *
+ * logger-binding configuration entity for domain.xml
+ * 
  * @author Pierantonio Cangianiello
  */
 @Configured

@@ -59,7 +59,8 @@ public class AdvancedLoggingJsfHandlers implements Startup {
     }
 
     /**
-     *
+     * Manages gf.getLogHandlers request from the Adming Console
+     * 
      * @param handlerCtx
      */
     @Handler(id = "gf.getLogHandlers",
@@ -86,6 +87,7 @@ public class AdvancedLoggingJsfHandlers implements Startup {
     }
     
     /**
+     *  Manages gf.getLogHandlerNames request from the Adming Console
      * 
      * @param handlerCtx 
      */
@@ -106,8 +108,9 @@ public class AdvancedLoggingJsfHandlers implements Startup {
         }
         handlerCtx.setOutputValue("logHandlerNames", logHandlerNames);
     }
-
+    
     /**
+     *  Manages gf.getLoggerBindings request from the Adming Console
      * 
      * @param handlerCtx 
      */
@@ -135,8 +138,9 @@ public class AdvancedLoggingJsfHandlers implements Startup {
 
     
     /**
-     *
-     * @param handlerCtx
+     *  Manages gf.updateLogHandlers request from the Adming Console
+     * 
+     * @param handlerCtx 
      */
     @Handler(id = "gf.updateLogHandlers",
     input = {
@@ -244,6 +248,7 @@ public class AdvancedLoggingJsfHandlers implements Startup {
     }
 
     /**
+     * Manages gf.updateLoggersBinding request from the Adming Console
      *
      * @param handlerCtx
      */
@@ -297,6 +302,12 @@ public class AdvancedLoggingJsfHandlers implements Startup {
         
     }
        
+    /**
+     * Check if the configuration-name passed by the Admin Console is the active one.
+     * 
+     * @param handlerCtx
+     * @return 
+     */
     private static boolean isCurrentConfiguration(HandlerContext handlerCtx) {
         String configName = (String) handlerCtx.getInputValue("configName");
         return advancedLoggingService.getCurrentConfigName().equals(configName);

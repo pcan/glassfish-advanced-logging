@@ -23,7 +23,8 @@ import org.jvnet.hk2.config.*;
 
 
 /**
- *
+ * handler-configuration configuration entity for domain.xml
+ * 
  * @author Pierantonio Cangianiello
  */
 @Configured

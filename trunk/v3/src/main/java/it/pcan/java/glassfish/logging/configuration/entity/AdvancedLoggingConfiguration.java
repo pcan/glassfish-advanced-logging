@@ -21,7 +21,8 @@ import org.jvnet.hk2.config.Configured;
 import org.jvnet.hk2.config.Element;
 
 /**
- *
+ * advanced-logging configuration entity for domain.xml
+ * 
  * @author Pierantonio Cangianiello
  */
 @Configured(name = "advanced-logging")
