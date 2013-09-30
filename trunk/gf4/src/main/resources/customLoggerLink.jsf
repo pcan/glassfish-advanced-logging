@@ -1,8 +1,0 @@
-<sun:property>
-    <sun:hyperlink 
-	    toolTip="Advanced Logging Settings" 
-	    url="/advancedlogging/configuration/logHandlers.jsf?configName=#{configName}">
-        <sun:image url="/resource/advancedlogging/images/loghandler.png" />
-        <sun:staticText text="Advanced Logging Settings" />
-    </sun:hyperlink>
-</sun:property>
