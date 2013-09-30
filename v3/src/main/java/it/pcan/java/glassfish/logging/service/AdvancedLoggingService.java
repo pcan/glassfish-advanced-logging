@@ -52,10 +52,6 @@ public class AdvancedLoggingService implements Startup, PostConstruct {
     @Inject
     private static LogHandlerManager logHandlerManager;
 
-    //@Inject
-    //private Configs configs;
-    //@Inject(optional=true) //when this Module is installed, there is no configuration yet.
-    //private AdvancedLoggingConfiguration advancedLoggingConfiguration;
     @Override
     public Lifecycle getLifecycle() {
         return Lifecycle.SERVER;
@@ -63,12 +59,6 @@ public class AdvancedLoggingService implements Startup, PostConstruct {
 
     @Override
     public void postConstruct() {
-        /* try {
-         Thread.sleep(5000);
-         } catch (InterruptedException ex) {
-         Logger.getLogger(AdvancedLoggingService.class.getName()).log(Level.SEVERE, null, ex);
-         }*/
-
         String currentConfigName = currentConfig.getName();
 
         System.out.println("\033[34mLogHandlerService module: postConstruct()");
@@ -97,32 +87,6 @@ public class AdvancedLoggingService implements Startup, PostConstruct {
                 logger.log(Level.FINE, "Advanced Logging: Registered binding: {0} -> {1}", new Object[]{loggerName, handlerName});
             }
         }
-
-
-        /*List<Config> configList = configs.getConfig();
-         for (Config config : configList) {
-         AdvancedLoggingConfiguration advancedLoggingConfiguration =
-         config.getExtensionByType(AdvancedLoggingConfiguration.class);
-         if (advancedLoggingConfiguration == null) {
-         try {
-         advancedLoggingConfiguration = ConfigurationManager.createEmptyConfiguration(config);
-         } catch (TransactionFailure ex) {
-         logger.log(Level.SEVERE, null, ex);
-         }
-         }
-         configurationManagerMap.put(config.getName(), new ConfigurationManager(advancedLoggingConfiguration));
-         }*/
-        /*
-         if(advancedLoggingConfiguration == null) {
-         try {
-         advancedLoggingConfiguration = ConfigurationManager.createEmptyConfiguration(config);
-         } catch (TransactionFailure ex) {
-         logger.log(Level.SEVERE, null, ex);
-         }
-         }
-         for(HandlerConfiguration handlerConfiguration : advancedLoggingConfiguration.getLogHandler()) {
-         System.out.println("Log handler: " + handlerConfiguration.getName() + " (" + handlerConfiguration.getFileNamePattern() + ")");
-         }*/
 
     }
 
