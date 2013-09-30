@@ -37,7 +37,9 @@ import org.jvnet.hk2.component.Singleton;
 import org.jvnet.hk2.config.TransactionFailure;
 
 /**
- *
+ * This is the "main" class for the Advanced-Logging module.
+ * It runs at server startup, loads configuration and create the Log Handlers and Bindings.
+ * 
  * @author Pierantonio Cangianiello
  */
 @Service
@@ -90,10 +92,21 @@ public class AdvancedLoggingService implements Startup, PostConstruct {
 
     }
 
+    /**
+     * Get the active configuration name.
+     * 
+     * @return The active configuration name
+     */
     public String getCurrentConfigName() {
         return currentConfig.getName();
     }
 
+    /**
+     * Get the ConfigurationManager for the given configuration name.
+     * 
+     * @param configName The configuration name
+     * @return 
+     */
     public ConfigurationManager getConfigurationManager(String configName) {
         ConfigurationManager configurationManager = null;
         if (habitat != null) {

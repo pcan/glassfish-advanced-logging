@@ -37,7 +37,8 @@ import org.jvnet.hk2.annotations.Service;
 import org.jvnet.hk2.component.Singleton;
 
 /**
- *
+ * This class allows Log Handlers management (creation, update and removal) and logger binding/unbinding to handlers.
+ * 
  * @author Pierantonio Cangianiello
  */
 @Service
@@ -46,12 +47,23 @@ public class LogHandlerManager {
 
     private final Map<String, HandlerDetail> handlerMap = new HashMap<String, HandlerDetail>();
 
+    /**
+     * Creates and initializes a new Log Handler using the given configuration
+     * @param config The Log Handler configuration
+     * @throws IOException 
+     */
     public void addLogHandler(HandlerConfiguration config) throws IOException {
         Handler handler = createHandler(config.getFileNamePattern(), config.getMaxFileSize(), config.getMaxFileRotations());
         HandlerDetail handlerDetail = new HandlerDetail(config.getName(), handler);
         handlerMap.put(config.getName(), handlerDetail);
     }
 
+    /**
+     * Updates an existing Log Handler using the given configuration.
+     *
+     * @param config The Log Handler configuration
+     * @throws IOException 
+     */
     public void updateLogHandler(HandlerConfiguration config) throws IOException {
         String name = config.getName();
         HandlerDetail oldHandlerDetail = handlerMap.get(name);
@@ -70,6 +82,10 @@ public class LogHandlerManager {
         }
     }
 
+    /**
+     * Removes a Log Handler, given its name. It removes all logger bindings, too.
+     * @param name 
+     */
     public void removeLogHandler(String name) {
         HandlerDetail handlerDetail = handlerMap.get(name);
         if (handlerDetail != null) {
@@ -82,6 +98,13 @@ public class LogHandlerManager {
         }
     }
 
+    /**
+     * Bind a Logger to an existing Log Handler.
+     * 
+     * @param handlerName The name of the Log Handler
+     * @param loggerName The name of the Logger
+     * @param useParentHandlers If set to true, the Logger messages will be propagated to parent Loggers too.
+     */
     public void bindLogger(String handlerName, String loggerName, boolean useParentHandlers) {
         HandlerDetail handlerDetail = handlerMap.get(handlerName);
         if (handlerDetail != null) {
@@ -94,6 +117,12 @@ public class LogHandlerManager {
         }
     }
 
+    /**
+     * Unbind a logger
+     * 
+     * @param handlerName The name of the Log Handler
+     * @param loggerName The name of the Logger
+     */
     public void unbindLogger(String handlerName, String loggerName) {
         HandlerDetail handlerDetail = handlerMap.get(handlerName);
         if (handlerDetail != null) {
@@ -104,14 +133,27 @@ public class LogHandlerManager {
         }
     }
 
+    /**
+     * Get all valid Log Handler Names.
+     * 
+     * @return A collection of Log Handler Names.
+     */
     public Collection<String> getAllHandlerNames() {
         return handlerMap.keySet();
     }
 
+    /**
+     * Get all valid Log Handler Details.
+     * 
+     * @return A collection of Log Handler Details.
+     */
     public Collection<HandlerDetail> getAllHandlerDetails() {
         return handlerMap.values();
     }
 
+    /**
+     * This class holds the java.util.logging.Handler object, Handler bindings and Handler name.
+     */
     public static class HandlerDetail {
 
         final String name;
@@ -141,7 +183,7 @@ public class LogHandlerManager {
 
     private Handler createHandler(String fileNamePattern, int maxFileSize, int maxFileRotations) throws IOException {
         Handler handler = new FileHandler(fileNamePattern, maxFileSize, maxFileRotations, true);
-        handler.setFormatter(new MessageFormatter());
+        handler.setFormatter(new MessageFormatter()); //TODO: choose custom formatter in Admin Console!
         return handler;
     }
 

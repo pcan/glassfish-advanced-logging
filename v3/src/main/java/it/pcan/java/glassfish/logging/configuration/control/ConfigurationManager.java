@@ -29,7 +29,8 @@ import org.jvnet.hk2.config.SingleConfigCode;
 import org.jvnet.hk2.config.TransactionFailure;
 
 /**
- *
+ * This class contains convenience methods for handling configuration.
+ * 
  * @author Pierantonio Cangianiello
  */
 public class ConfigurationManager {

@@ -20,7 +20,8 @@ import org.glassfish.api.admingui.ConsoleProvider;
 import org.jvnet.hk2.annotations.Service;
 
 /**
- *
+ * This class is used by the kernel to report the presence of Admin Console files.
+ * 
  * @author Pierantonio Cangianiello
  */
 @Service
