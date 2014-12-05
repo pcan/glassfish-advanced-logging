@@ -91,6 +91,7 @@ public class LogHandlerManager {
         if (handlerDetail != null) {
             for (Logger logger : handlerDetail.loggers) {
                 logger.removeHandler(handlerDetail.handler);
+                logger.setUseParentHandlers(true);
             }
             handlerDetail.handler.close();
             handlerDetail.loggers.clear();
