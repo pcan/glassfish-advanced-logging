@@ -4,7 +4,7 @@
 An extension for Glassfish v3 & v4 logging system that allows the redirection of specific log flows to different files. It is fully integrated with the existing HK2 Kernel, so it's a plug-and-play module. This module comes with a standard Glassfish Admin Console configuration interface, integrated under the Configuration node.
 
 ## Setup ##
-Copy the [Glassfish3 jar archive](https://glassfish-advanced-logging.googlecode.com/svn/wiki/advanced-logging-gf3.jar) or the [Glassfish4 jar archive](https://glassfish-advanced-logging.googlecode.com/svn/wiki/advanced-logging-gf4.jar) in the modules directory, under the Glassfish Server installation path. Restart the server, the module is already up and functioning.
+Copy the [Glassfish3 jar archive](https://github.com/pcan/glassfish-advanced-logging/blob/wiki/advanced-logging-gf3.jar?raw=true) or the [Glassfish4 jar archive](https://github.com/pcan/glassfish-advanced-logging/blob/wiki/advanced-logging-gf4.jar?raw=true) in the modules directory, under the Glassfish Server installation path. Restart the server, the module is already up and functioning.
 
 ## Configuration ##
 The configuration interface for the Advanced Logging module has been integrated in the Configuration Tree of the Admin Console (see below):
